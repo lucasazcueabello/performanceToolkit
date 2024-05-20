@@ -1,6 +1,8 @@
 import sys
 import yaml
 import subprocess
+import os
+import glob
 
 def readYAML():
     with open("configurations.yaml", 'r') as file:
@@ -13,12 +15,17 @@ def getUpdatedCommand(file, executable_file, command):
             updated_command.append(file)
         elif element == "executable_file":
             updated_command.append(executable_file)
+        elif '*' in element and element.startswith('*.') and len(element) > 2:
+            extension = element[1:]
+            matching_files = glob.glob(f"*{extension}")
+            updated_command.extend(matching_files)
         else:
             updated_command.append(element)
     return updated_command
 
 def runCompilation(file, executable_file, command):
     command = getUpdatedCommand(file, executable_file, command)
+    print(command)
     result = subprocess.run(command, capture_output=True, text=True)
     # Check if the command was successful
     if result.returncode != 0:

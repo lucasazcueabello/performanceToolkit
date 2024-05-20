@@ -31,7 +31,7 @@ def getExecuteCommand(file):
     languages = readYAML()["languages"]
     for language in languages:
         if language["extension"] == extension:
-            return getUpdatedCommand({"file": file, "./executable_file": "./" + file.rsplit('.', 1)[0]}, language["execution"])
+            return getUpdatedCommand({"file": file, "./executable_file": "./" + file.rsplit('.', 1)[0], "executable_file": file.rsplit('.', 1)[0]}, language["execution"])
 
 def makeMeasurement(metric, string):
     tools = readYAML()["measurement_tools"]

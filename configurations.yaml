@@ -1,0 +1,195 @@
+functionalities_sequences:
+  - name: fullComparison
+    steps:
+      - "Compilation"
+      - "Execution"
+      - "DataProcessing"
+  - name: segmentComparison
+    steps:
+      - "Comments"
+      - "Libraries"
+      - "Compilation"
+      - "Execution"
+      - "DataProcessing"
+  - name: lineAnalysis
+    steps:
+      - "Comments"
+      - "Libraries"
+      - "Compilation"
+      - "Execution"
+      - "DataProcessing"
+  - name: fullAnalysis
+    steps:
+      - "Compilation"
+      - "Execution"
+      - "DataProcessing"
+functionalities_arguments:
+  - name: fullComparison
+    arguments:
+      - find: "scope"
+        replace: "full"
+      - find: "chart"
+        replace: "barChart"
+  - name: segmentComparison
+    arguments:
+      - find: "scope"
+        replace: "segment"
+      - find: "chart"
+        replace: "barChart"
+  - name: lineAnalysis
+    arguments:
+      - find: "scope"
+        replace: "line"
+      - find: "chart"
+        replace: "barChart"
+  - name: fullAnalysis
+    arguments:
+      - find: "scope"
+        replace: "full"
+      - find: "chart"
+        replace: "lineChart"
+module_commands:
+  - name: "Comments"
+    command:
+      - "python3"
+      - "Comments.py"
+      - "scope"
+      - "metric"
+      - "file"
+  - name: "Libraries"
+    command: 
+      - "python3"
+      - "Libraries.py"
+      - "file"
+  - name: "Compilation"
+    command: 
+      - "python3"
+      - "Compilation.py"
+      - "file"
+  - name: "Execution"
+    command: 
+      - "python3"
+      - "Execution.py"
+      - "scope"
+      - "metric"
+      - "file"
+  - name: "DataProcessing"
+    command: 
+      - "python3"
+      - "DataProcessing.py"
+      - "chart"
+      - "scope"
+      - "metric"
+      - "file"
+languages:
+  - name: "c"
+    extension: "c"
+    compilation:
+      - "gcc"
+      - "-o"
+      - "executable_file"
+      - "file"
+    execution:
+      - "./executable_file"
+    comments:
+      - name: "begin"
+        find: "//Begin"
+        replace: "system(\"toolPath -before\");"
+      - name: "end"
+        find: "//End"
+        replace: "system(\"toolPath -after\");"
+      - name: "line"
+        find: ""
+        replace: "system(\"toolPath line_count\");"
+  - name: "python"
+    extension: "py"
+    execution:
+      - "python3"
+      - "file"
+    libraries: 
+      - "subprocess"
+    comments:
+      - name: "begin"
+        find: "#Begin"
+        replace: "subprocess.run(['toolPath', '-before'], capture_output=True, text=True)"
+      - name: "end"
+        find: "#End"
+        replace: "subprocess.run(['toolPath', '-after'], capture_output=True, text=True)"
+      - name: "line"
+        find: ""
+        replace: "subprocess.run(['toolPath', 'line_count'], capture_output=True, text=True)"
+  - name: "java"
+    extension: "java"
+    compilation:
+      - "javac"
+      - "*.java"
+    execution:
+      - "java"
+      - "executable_file"
+  - name: "php"
+    extension: "php"
+    execution:
+      - "php"
+      - "file"
+  - name: "c++"
+    extension: "cpp"
+    compilation: 
+      - "g++"
+      - "*.cpp"
+      - "-o"
+      - "executable_file"
+    execution:
+      - "./executable_file"
+  - name: "javascript"
+    extension: "js"
+    execution:
+      - "node"
+      - "file"
+measurement_tools:
+  - name: "EnergyTool"
+    metric: "energy"
+    unit: "Jules"
+    symbol: "J"
+    path: "./Energy/energyTool"
+    file: "output.txt"
+    records_index: "1"
+    command:
+      - "toolPath"
+      - "-string"
+  - name: "TimeTool"
+    metric: "time"
+    unit: "seconds"
+    symbol: "T"
+    path: "./Time/timeTool"
+    file: "clock_output.txt"
+    records_index: "2"
+    command:
+      - "toolPath"
+      - "-string"
+delete_files:
+  files:
+    - "clock_output.txt"
+    - "output.txt"
+  extensions:
+    - "*.class"
+records:
+  scope:
+    - name: "full"
+      file: "full_records.csv"
+      columns:
+        - "File"
+        - "Energy"
+        - "Time"
+    - name: "segment"
+      file: "segment_records.csv"
+      columns:
+        - "File"
+        - "Energy"
+        - "Time"
+    - name: "line"
+      file: "segment_records.csv"
+      columns:
+        - "File"
+        - "Energy"
+        - "Time"
+  max_values: 20

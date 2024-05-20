@@ -23,6 +23,12 @@ functionalities_sequences:
       - "Compilation"
       - "Execution"
       - "DataProcessing"
+  - name: languageComparison
+    steps:
+      - "Compilation"
+      - "Execution"
+      - "DataProcessing"
+      - "LanguageComparison"
 functionalities_arguments:
   - name: fullComparison
     arguments:
@@ -48,6 +54,12 @@ functionalities_arguments:
         replace: "full"
       - find: "chart"
         replace: "lineChart"
+  - name: languageComparison
+    arguments:
+      - find: "scope"
+        replace: "full"
+      - find: "chart"
+        replace: "barChart"
 module_commands:
   - name: "Comments"
     command:
@@ -81,16 +93,35 @@ module_commands:
       - "scope"
       - "metric"
       - "file"
+  - name: "LanguageComparison"
+    command: 
+      - "python3"
+      - "LanguageComparison.py"
+      - "scope"
+      - "metric"
+      - "file"
 languages:
   - name: "c"
     extension: "c"
     compilation:
       - "gcc"
+      - "-pipe"
+      - "-Wall"
+      - "-O3"
+      - "-fomit-frame-pointer"
+      - "-march=native"
+      - "-fopenmp"
+      - "-D_FILE_OFFSET_BITS=64"
+      - "-I/usr/include/apr-1.0"
+      - "file"
       - "-o"
       - "executable_file"
-      - "file"
+      - "-lapr-1"
+      - "-lgomp"
+      - "-lm"
     execution:
       - "./executable_file"
+      - "21"
     comments:
       - name: "begin"
         find: "//Begin"
@@ -105,7 +136,9 @@ languages:
     extension: "py"
     execution:
       - "python3"
+      - "-OO"
       - "file"
+      - "21"
     libraries: 
       - "subprocess"
     comments:
@@ -126,25 +159,39 @@ languages:
     execution:
       - "java"
       - "executable_file"
+      - "21"
   - name: "php"
     extension: "php"
     execution:
       - "php"
+      - "-n"
+      - "-d"
+      - "memory_limit=4096M"
       - "file"
+      - "21"
   - name: "c++"
     extension: "cpp"
     compilation: 
       - "g++"
+      - "-pipe"
+      - "-O3"
+      - "-fomit-frame-pointer"
+      - "-march=native"
+      - "-fopenmp"
+      - "-I/usr/include/apr-1.0"
       - "*.cpp"
       - "-o"
       - "executable_file"
+      - "-lapr-1"
     execution:
       - "./executable_file"
+      - "21"
   - name: "javascript"
     extension: "js"
     execution:
       - "node"
       - "file"
+      - "21"
 measurement_tools:
   - name: "EnergyTool"
     metric: "energy"

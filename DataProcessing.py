@@ -18,7 +18,7 @@ def getMetricInfo(key, metric):
     for element in data:
         if element["metric"] == metric:
             return element[key]
-    return element[0]
+    return data[0][key]
 
 def getScope(scope):
     for scopes in readYAML()["records"]["scope"]:

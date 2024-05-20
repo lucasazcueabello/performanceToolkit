@@ -52,6 +52,8 @@ def executeFile(file, metric):
         print("Error message:")
         print(result.stderr)
         return -1
+    else:
+        print(result.stdout)
 
 def measureAndExecute(file, metric):
     makeMeasurement(metric, "before")

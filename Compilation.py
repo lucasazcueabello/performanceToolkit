@@ -25,7 +25,6 @@ def getUpdatedCommand(file, executable_file, command):
 
 def runCompilation(file, executable_file, command):
     command = getUpdatedCommand(file, executable_file, command)
-    print(command)
     result = subprocess.run(command, capture_output=True, text=True)
     # Check if the command was successful
     if result.returncode != 0:

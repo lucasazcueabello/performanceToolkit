@@ -169,7 +169,7 @@ def main():
 
     createFiles()
 
-    if sys.argv[2] == "-full" and action == "-comparison" and (len(sys.argv) == 7 or len(sys.argv) == 6):
+    if sys.argv[2] == "-full" and action == "-comparison" and len(sys.argv) == 6:
         #Run compare files sequence
         file1 = sys.argv[3]
         file2 = sys.argv[4]
@@ -181,7 +181,7 @@ def main():
 
         cleanFiles([file1.rsplit('.', 1)[0], file2.rsplit('.', 1)[0]])
 
-    elif sys.argv[2] == "-segment" and action == "-comparison" and (len(sys.argv) == 7 or len(sys.argv) == 6):
+    elif sys.argv[2] == "-segment" and action == "-comparison" and len(sys.argv) == 6:
         #Run compare segment sequence
         file1 = sys.argv[3]
         copy_file1 = cloneFile(file1)
@@ -196,18 +196,20 @@ def main():
 
         cleanFiles([copy_file1.rsplit('.', 1)[0], copy_file2.rsplit('.', 1)[0]])
 
-    elif sys.argv[2] == "-line" and action == "-analysis" and (len(sys.argv) == 5 or len(sys.argv) == 6):
-        #Run analyze files sequence
-        file1 = sys.argv[3]
-        copy_file1 = cloneFile(file1)
+    elif sys.argv[2] == "-segment" and action == "-comparison":
+        #Run compare files sequence
+        files = sys.argv[3:len(sys.argv) - 1]
 
-        metric = sys.argv[4]
+        for file in files:
+            runSequence("dataStructureComparison", cloneFile(file), sys.argv[-1])
 
-        runSequence("lineAnalysis", copy_file1, metric)
+        clean_files = []
+        for file in files:
+            clean_files.append(file.rsplit('.', 1)[0])
+        cleanFiles(clean_files)
 
-        cleanFiles([copy_file1.rsplit('.', 1)[0]])
 
-    elif sys.argv[2] == "-full" and action == "-analysis" and (len(sys.argv) == 5 or len(sys.argv) == 6):
+    elif sys.argv[2] == "-full" and action == "-analysis" and len(sys.argv) == 5:
         #Run analyze file sequence
         file1 = sys.argv[3]
         metric = sys.argv[4]

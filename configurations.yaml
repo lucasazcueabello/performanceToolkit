@@ -23,6 +23,14 @@ functionalities_sequences:
       - "Compilation"
       - "Execution"
       - "DataProcessing"
+  - name: dataStructureComparison
+    steps:
+      - "Comments"
+      - "Libraries"
+      - "Compilation"
+      - "Execution"
+      - "DataProcessing"
+      - "dataStructureComparison"
 functionalities_arguments:
   - name: fullComparison
     arguments:
@@ -48,6 +56,12 @@ functionalities_arguments:
         replace: "full"
       - find: "chart"
         replace: "lineChart"
+  - name: dataStructureComparison
+    arguments:
+      - find: "scope"
+        replace: "segment"
+      - find: "chart"
+        replace: "barChart"
 module_commands:
   - name: "Comments"
     command:
@@ -81,6 +95,13 @@ module_commands:
       - "scope"
       - "metric"
       - "file"
+  - name: "dataStructureComparison"
+    command: 
+      - "python3"
+      - "dataStructureComparison.py"
+      - "scope"
+      - "metric"
+      - "file"
 languages:
   - name: "c"
     extension: "c"
@@ -106,6 +127,7 @@ languages:
     execution:
       - "python3"
       - "file"
+      - "10000"
     libraries: 
       - "subprocess"
     comments:
@@ -148,7 +170,7 @@ languages:
 measurement_tools:
   - name: "EnergyTool"
     metric: "energy"
-    unit: "Joules"
+    unit: "Jules"
     symbol: "J"
     path: "./Energy/energyTool"
     file: "output.txt"
@@ -193,3 +215,7 @@ records:
         - "Energy"
         - "Time"
   max_values: 20
+data_structures:
+  - "list"
+  - "set"
+  - "dictionary"

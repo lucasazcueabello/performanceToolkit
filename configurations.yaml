@@ -170,7 +170,7 @@ languages:
 measurement_tools:
   - name: "EnergyTool"
     metric: "energy"
-    unit: "Jules"
+    unit: "Joules"
     symbol: "J"
     path: "./Energy/energyTool"
     file: "output.txt"
